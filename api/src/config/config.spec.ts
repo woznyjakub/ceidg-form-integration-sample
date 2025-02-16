@@ -10,6 +10,7 @@ describe('Config', () => {
         "nodeEnv",
         "logLevel",
         "logDir",
+        "apiKeyCeidg",
         "apiGlobalPrefix",
         "dbHost",
         "dbPort",

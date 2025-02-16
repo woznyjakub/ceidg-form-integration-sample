@@ -35,6 +35,10 @@ export class EnvironmentVariables {
 
   @Expose()
   @IsString()
+  API_KEY_CEIDG: string;
+
+  @Expose()
+  @IsString()
   // This regex is only run on app init
   // eslint-disable-next-line security/detect-unsafe-regex
   @Matches(/^\/\w{1,32}(?:\/\w{1,32}){0,8}(?<!\/)$/)

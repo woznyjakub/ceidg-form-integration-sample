@@ -2,11 +2,14 @@ import { ArgumentsHost, Catch, HttpException, HttpStatus } from '@nestjs/common'
 import { BaseExceptionFilter } from '@nestjs/core';
 import { Response } from 'express';
 
+import { getConfig } from '@config/config';
+import { NodeEnv } from '@config/env';
 import { ContextStorageService } from '@context-storage/services/context-storage.service';
 import { LoggerService } from '@logger/services/logger.service';
 
 export type DefaultErrorResponse = {
   statusCode: HttpStatus;
+  message?: string;
   timestamp: string;
   traceId: string | null;
 };
@@ -39,6 +42,8 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
 
     const responseBody: DefaultErrorResponse = {
       statusCode: httpStatus,
+      // @ts-ignore
+      message: getConfig().nodeEnv === NodeEnv.Dev ? exception?.message : undefined,
       timestamp: new Date().toISOString(),
       traceId,
     };

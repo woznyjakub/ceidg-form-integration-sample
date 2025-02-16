@@ -11,6 +11,7 @@ export type Config = {
   apiGlobalPrefix: string;
   logLevel: LogLevel;
   logDir: string;
+  apiKeyCeidg: string;
   dbHost: string;
   dbPort: number;
   postgresDb: string;
