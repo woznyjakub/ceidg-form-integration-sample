@@ -6,6 +6,7 @@ import { memoize } from 'lodash';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 import { getConfig } from '@config/config';
+import { NodeEnv } from '@config/env';
 
 export const createDbConfig = memoize((isLocal = false) => {
   const { dbHost, dbPort, postgresDb, dbAppUserName, dbAppUserPassword } = getConfig();
@@ -18,6 +19,7 @@ export const createDbConfig = memoize((isLocal = false) => {
     username: dbAppUserName,
     password: dbAppUserPassword,
     namingStrategy: new SnakeNamingStrategy(),
+    synchronize: getConfig().nodeEnv === NodeEnv.Dev,
     entities: [join(process.cwd(), 'dist', '**', '*.entity.js')],
     migrations: [join(process.cwd(), 'dist', '**', 'main-db', 'migrations', '*.js')],
   } satisfies TypeOrmModuleOptions;
