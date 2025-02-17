@@ -1,56 +1,90 @@
-# Nest.js + React.js Monorepo rich starter
+# CEIDG form integration sample
 
-## Technologies and features included
+A sample React.js form and Node.js form that integrates with the Polish Government's Business Registry public API.
 
-- Node.js
-- TypeScript
-- Nest.js
-- Docker
-- PostgreSQL
-- React.js
-- Tailwind CSS
+## Technologies
 
-### Backend
+React.js, Node.js (Nest.js), PostgreSQL, Docker, docker-compose, Vitest, Husky
 
-- SWC compiler (non-default in Nest.js)
-- PNPM package manager instead of NPM
-- Docker
-- DB module (PostgreSQL + TypeORM)
-- Nginx reverse proxy
-- CORS resolved by reverse proxy setting
-- .env handling and validation
-- Makefile
-- Eslint (with option to use different rules in src and tests)
-- Prettier
-- Husky pre-commit hook (lint + test) separately for frontend and backend
-- Vitest unit test setup
-- Winston logger (with log file output)
-- TraceId implementation
-- Per-request state module using AsyncLocalStorage from node:async_hooks API
-- Swagger
-- PNPM Workspaces + global install command
-- Global error handler
+This project was bootstaped with my own Nest.js starter [https://github.com/woznyjakub/nest-react-monorepo-rich-starter](https://github.com/woznyjakub/nest-react-monorepo-rich-starter)
 
-### Todo Backend
+## Prerequisites
 
-- Redis cache
-- Mailer
-- DTO validation with class-transformer and class-validator
-- Authentication + user entity
-- Multer with file uploads to AWS S3 + setting nginx to handle uploads
-- CI (GitHub or EC2 + Jenkins)
-- SSL
-- Healthcheck module
-- E2E tests with Cypress
+- Docker (tested with v24.0.6)
+- docker-compose (tested with v2.23.0-desktop.1)
+- PNPM package manager (tested with 9.5.0)
+- GNU Make (3.81, any other makefile handling program)
 
-### Frontend
+## Installation
 
-- Initialized with Vite: TypeScript + SWC
-- Tailwind CSS
-- Docker setup
-- Nginx setup
+- clone this repository
 
-### Todo Frontend
+```
+git clone https://github.com/woznyjakub/ceidg-form-integration-sample.git
+```
 
-- Vitest
-- research (!)
+- Copy files:
+
+  - `api/.env.example` into `api/.env`
+  - `api/.env.db.example` into `api/.env.db`
+  - `/infra/main-db/.env.db.example` into `/infra/main-db/.env.db`
+
+- Insert your CEIDG API key into API_KEY_CEIDG variable in `api/.env`
+
+## Running the application
+
+- Start the application by running command
+
+```
+make up
+```
+
+install local version of node_modules
+
+(in the root directory)
+
+```
+pnpm i
+```
+
+## Running unit tests
+
+```
+cd /api
+```
+
+```
+pnpm test
+```
+
+## URL Addresses
+
+The Form's url is
+
+```
+http://localhost
+```
+
+The API's base url is
+
+```
+http://localhost/api
+```
+
+### Endpoints list
+
+```
+POST /companies + body { "taxId": string, "companyName": string, "firstName": string, "lastName": string, "address": string, "postalCode": string, "city": string }
+
+GET /ceidg/company/:taxId
+```
+
+## Example Backend cURL Queries
+
+```sh
+curl -X POST http://localhost/api/companies \
+  -H "Content-Type: application/json" \
+  -d '{"taxId":"1111111111","companyName":"Company1","firstName":"Name","lastName":"Surname","address":"Słoneczna 4","postalCode":"11-111","city":"Poznań"}'
+
+curl -X GET 'http://localhost/api/ceidg/company/1111111111'
+```
