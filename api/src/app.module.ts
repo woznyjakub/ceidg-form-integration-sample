@@ -2,6 +2,7 @@ import { MiddlewareConsumer, Module, Provider } from '@nestjs/common';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 
 import { CeidgIntegrationModule } from './modules/ceidg-integration/ceidg-integration.module';
+import { CompaniesModule } from './modules/companies/companies.module';
 
 import { AllExceptionsFilter } from '@common/filters/all-exceptions/all-exceptions.filter';
 import { RequestLoggerInterceptor } from '@common/interceptors/request-logger/request-logger.interceptor';
@@ -25,7 +26,13 @@ const globalInterceptors: Provider[] = [
 ];
 
 @Module({
-  imports: [LoggerModule, ContextStorageModule, MainDbModule, CeidgIntegrationModule],
+  imports: [
+    LoggerModule,
+    ContextStorageModule,
+    MainDbModule,
+    CeidgIntegrationModule,
+    CompaniesModule,
+  ],
   controllers: [],
   providers: [...globalInterceptors, ...globalMiddlewares],
 })

@@ -18,8 +18,8 @@ export const createDbConfig = memoize((isLocal = false) => {
     username: dbAppUserName,
     password: dbAppUserPassword,
     namingStrategy: new SnakeNamingStrategy(),
-    entities: [join(process.cwd(), 'src', '**', '*.entity.ts')],
-    migrations: [join(process.cwd(), 'src', '**', 'main-db', 'migrations', '*.ts')],
+    entities: [join(process.cwd(), 'dist', '**', '*.entity.js')],
+    migrations: [join(process.cwd(), 'dist', '**', 'main-db', 'migrations', '*.js')],
   } satisfies TypeOrmModuleOptions;
 });
 
