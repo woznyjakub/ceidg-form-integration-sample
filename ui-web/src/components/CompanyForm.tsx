@@ -29,7 +29,6 @@ export function CompanyForm() {
       const response = await axios.get(`${backendBaseUrl}/ceidg/company/${taxId}`);
       const data = response.data.firmy[0];
 
-      console.log({ data });
       if (data) {
         setValue('companyName', data.nazwa);
         setValue('firstName', data.wlasciciel?.imie);
@@ -55,7 +54,7 @@ export function CompanyForm() {
 
     try {
       const response = await axios.post(`${backendBaseUrl}/companies`, data);
-      console.log({ response });
+
       if (response.status >= 200 && response.status < 300) {
         setMessage('Firma została dodana do listy.');
       } else {
@@ -98,6 +97,7 @@ export function CompanyForm() {
               },
             })}
             onChange={handleTaxIdChange}
+            disabled={isSubmitting}
           />
           {errors.taxId && <p>{errors.taxId.message}</p>}
         </div>
@@ -106,26 +106,55 @@ export function CompanyForm() {
           <label htmlFor="companyName">Nazwa Firmy</label>
           <input
             id="companyName"
-            {...register('companyName', { required: 'Nazwa firmy jest wymagana' })}
+            {...register('companyName', {
+              required: 'Nazwa firmy jest wymagana',
+              minLength: 2,
+              maxLength: 255,
+            })}
+            disabled={isSubmitting}
           />
           {errors.companyName && <p>{errors.companyName.message}</p>}
         </div>
 
         <div>
           <label htmlFor="firstName">Imię</label>
-          <input id="firstName" {...register('firstName', { required: 'Imię jest wymagane' })} />
+          <input
+            id="firstName"
+            {...register('firstName', {
+              required: 'Imię jest wymagane',
+              minLength: 2,
+              maxLength: 100,
+            })}
+            disabled={isSubmitting}
+          />
           {errors.firstName && <p>{errors.firstName.message}</p>}
         </div>
 
         <div>
           <label htmlFor="lastName">Nazwisko</label>
-          <input id="lastName" {...register('lastName', { required: 'Nazwisko jest wymagane' })} />
+          <input
+            id="lastName"
+            {...register('lastName', {
+              required: 'Nazwisko jest wymagane',
+              minLength: 2,
+              maxLength: 100,
+            })}
+            disabled={isSubmitting}
+          />
           {errors.lastName && <p>{errors.lastName.message}</p>}
         </div>
 
         <div>
           <label htmlFor="address">Adres</label>
-          <input id="address" {...register('address', { required: 'Adres jest wymagany' })} />
+          <input
+            id="address"
+            {...register('address', {
+              required: 'Adres jest wymagany',
+              minLength: 2,
+              maxLength: 255,
+            })}
+            disabled={isSubmitting}
+          />
           {errors.address && <p>{errors.address.message}</p>}
         </div>
 
@@ -133,14 +162,26 @@ export function CompanyForm() {
           <label htmlFor="postalCode">Kod Pocztowy</label>
           <input
             id="postalCode"
-            {...register('postalCode', { required: 'Kod pocztowy jest wymagany' })}
+            {...register('postalCode', {
+              required: 'Kod pocztowy jest wymagany',
+              maxLength: 20,
+            })}
+            disabled={isSubmitting}
           />
           {errors.postalCode && <p>{errors.postalCode.message}</p>}
         </div>
 
         <div>
           <label htmlFor="city">Miejscowość</label>
-          <input id="city" {...register('city', { required: 'Miejscowość jest wymagana' })} />
+          <input
+            id="city"
+            {...register('city', {
+              required: 'Miejscowość jest wymagana',
+              minLength: 2,
+              maxLength: 100,
+            })}
+            disabled={isSubmitting}
+          />
           {errors.city && <p>{errors.city.message}</p>}
         </div>
 
