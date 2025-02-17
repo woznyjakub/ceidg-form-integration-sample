@@ -1,3 +1,4 @@
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
@@ -24,6 +25,8 @@ async function bootstrap(): Promise<void> {
     credentials: true,
     maxAge: 600,
   });
+
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }));
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Nest.js + React.js Monorepo rich starter')

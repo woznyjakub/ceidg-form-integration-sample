@@ -1,5 +1,4 @@
 import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
-import { validate } from 'class-validator';
 
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { Company } from './entities/company.entity';
@@ -16,11 +15,6 @@ export class CompaniesService {
 
     const company = new Company();
     Object.assign(company, createCompanyDto);
-
-    const errors = await validate(company);
-    if (errors.length > 0) {
-      throw new BadRequestException(errors);
-    }
 
     try {
       await Company.save(company);
